@@ -1,5 +1,7 @@
 import React from 'react'
-import {Text, View, StyleSheet, Image, Modal, Button} from 'react-native'
+import { View, Modal, Button, TouchableOpacity} from 'react-native'
+import styled from 'styled-components'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 const PlaceDetails = props => {
   let modalContent = null
@@ -7,40 +9,61 @@ const PlaceDetails = props => {
   if (props.selectedPlace) {
     modalContent = (
       <View>
-        <Image source={props.selectedPlace.image} style={styles.placeImage} />
-        <Text style={styles.placeText}>{props.selectedPlace.place}</Text>
+        <StyledImage source={props.selectedPlace.image} />
+        <StyledText>{props.selectedPlace.place}</StyledText>
       </View>
     )
   }
 
   return (
     <Modal visible={props.selectedPlace !== null} animationType='slide' onRequestClose={props.onModalClose}>
-      <View style={styles.modalContiner} >
+      <StyledView >
         {modalContent}
-        <View>
-          <Button title='Close' onPress={props.onModalClose} />
+        <FlexView>
+          <TouchableOpacity>
+              <StyledIconView>
+                <Icon size={30} name='ios-trash' color='red' onPress={() => props.onItemDelete(props.selectedPlace.key)}/>
+              </StyledIconView>
+            </TouchableOpacity>
+            <TouchableOpacity>
+            <StyledIconView>
+                <Icon size={30} name='ios-close' color='blue' onPress={props.onModalClose}/>
+              </StyledIconView>
+            </TouchableOpacity>
+
+          {/* <Button title='Close' onPress={props.onModalClose} />
           <Button title='Delete' color='red' onPress={() => props.onItemDelete(props.selectedPlace.key)} />
-        </View>
-      </View>
+           */}
+        </FlexView>
+      </StyledView>
     </Modal>
   )
 }
 
-const styles = StyleSheet.create({
+const StyledImage = styled.Image`
+    width: 100%;
+    height: 200px;
+`
 
-  modalContiner: {
-    margin: 22
-  },
-  placeImage: {
-    width: '100%',
-    height: 200
-  },
-  placeText: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 27
+const FlexView = styled.View`
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+`
 
-  }
-})
+const StyledIconView = styled.View`
+  align-items: center;
+`
+const StyledView = styled.View `
+margin: 22px;
+`
+
+const StyledText = styled.Text`
+    font-weight: bold;
+    text-align: center;
+    font-size: 27px;
+`
+
+
 
 export default PlaceDetails

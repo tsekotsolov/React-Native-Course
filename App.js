@@ -1,18 +1,16 @@
 import React, {Component} from 'react'
-import {StyleSheet, View} from 'react-native'
 import { connect } from 'react-redux'
 import {addPlace, deletePlace, selectPlace, deselectPlace} from './src/store/actions/index'
-import ListItem from './src/components/ListItem/ListItem'
 import PlaceInput from './src/components/PlaceInput/PlaceInput'
 import PlaceList from './src/components/PlaceList/PlaceList'
-import placeImage from './src/assets/beautiful-place.jpg'
 import PlaceDetails from './src/components/PlaceDetails/PlaceDetails'
+import styled from 'styled-components'
 
  class App extends Component {
-  
 
   addPlaces = place => {
   this.props.onAddPlace(place)
+  console.log('Place added')
 }
 
   selectPlace = key =>{
@@ -29,7 +27,7 @@ import PlaceDetails from './src/components/PlaceDetails/PlaceDetails'
 
   render() {
     return (
-      <View style={styles.container}>
+      <StyledView>
        <PlaceDetails 
        selectedPlace={this.props.selectedPlace}
        onModalClose ={this.onModalClose}
@@ -37,20 +35,18 @@ import PlaceDetails from './src/components/PlaceDetails/PlaceDetails'
        />  
         <PlaceInput addPlaces={this.addPlaces} />
         <PlaceList places={this.props.places} selectPlace={this.selectPlace}/>
-      </View>
+      </StyledView>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    paddingTop:20,
-  }
-})
+const StyledView = styled.View`
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #F5FCFF;
+    padding-top:20;
+`
 
 const mapStateToprops = state => {
   return {
