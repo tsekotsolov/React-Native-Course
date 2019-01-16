@@ -1,67 +1,26 @@
-import React, {Component} from 'react'
-import { connect } from 'react-redux'
-import {addPlace, deletePlace, selectPlace, deselectPlace} from './src/store/actions/index'
-import PlaceInput from './src/components/PlaceInput/PlaceInput'
-import PlaceList from './src/components/PlaceList/PlaceList'
-import PlaceDetails from './src/components/PlaceDetails/PlaceDetails'
-import styled from 'styled-components'
+import { Navigation } from 'react-native-navigation'
+import { Provider } from 'react-redux'
+import configureStore from './src/store/configureStore'
 
- class App extends Component {
+import AuthScreen from './src/screens/Auth/Auth'
+import SharePlaceScreen from './src/screens/SharePlace/SharePlace'
+import FindPlaceScreen from './src/screens/FindPlace/FindPlace'
+import PlaceDetailScreen from './src/screens/PlaceDetails/PlaceDetails'
 
-  addPlaces = place => {
-  this.props.onAddPlace(place)
-  console.log('Place added')
-}
+const store = configureStore()
 
-  selectPlace = key =>{
-   this.props.onSelectPlace(key)
+// Register Screens
+
+Navigation.registerComponent('awesome-palces.Authscreen', () => AuthScreen, store, Provider)
+Navigation.registerComponent('awesome-palces.SharePlaceScreen', () => SharePlaceScreen, store, Provider)
+Navigation.registerComponent('awesome-palces.FindPlaceScreen', () => FindPlaceScreen, store, Provider)
+Navigation.registerComponent('awesome-palces.PlaceDetailScreen', () => PlaceDetailScreen, store, Provider)
+
+// Start App
+
+Navigation.startSingleScreenApp({
+  screen: {
+    screen: 'awesome-palces.Authscreen',
+    title: 'Login'
   }
-
-  onModalClose  = _ => {
-   this.props.onDeselectPlace()
-  }
-
-  onItemDelete  = key => {
-   this.props.onDeletePlace(key)
-  }
-
-  render() {
-    return (
-      <StyledView>
-       <PlaceDetails 
-       selectedPlace={this.props.selectedPlace}
-       onModalClose ={this.onModalClose}
-       onItemDelete={this.onItemDelete}
-       />  
-        <PlaceInput addPlaces={this.addPlaces} />
-        <PlaceList places={this.props.places} selectPlace={this.selectPlace}/>
-      </StyledView>
-    )
-  }
-}
-
-const StyledView = styled.View`
-    flex: 1;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #F5FCFF;
-    padding-top:20;
-`
-
-const mapStateToprops = state => {
-  return {
-    places:state.places.places,
-    selectedPlace:state.places.selectedPlace,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onAddPlace: place => dispatch(addPlace(place)),
-    onDeletePlace:key => dispatch(deletePlace(key)),
-    onSelectPlace: key => dispatch(selectPlace(key)),
-    onDeselectPlace: _ => dispatch(deselectPlace())
-  }
-}
-
-export default connect(mapStateToprops,mapDispatchToProps)(App)
+})

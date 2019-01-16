@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text, TouchableOpacity} from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 
 const ListItem = props => (
@@ -11,12 +11,11 @@ const ListItem = props => (
   </TouchableOpacity>
 )
 
-
 const StyledView = styled.View`
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: ${props => props.primary ? "white" : "palevioletred"};
+    background-color: ${props => props.primary ? 'white' : 'palevioletred'};
     flex-direction: row;
     align-items: center;
 `

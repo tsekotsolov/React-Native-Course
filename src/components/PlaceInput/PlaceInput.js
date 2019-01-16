@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import {StyleSheet, View, TextInput, Button} from 'react-native'
+import {StyleSheet, TextInput, Button} from 'react-native'
+import styled from 'styled-components'
 
 class PlaceInput extends Component {
   constructor (props) {
@@ -19,9 +20,8 @@ class PlaceInput extends Component {
       const {place} = this.state
 
     return (
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
+      <InputContainer>
+        <StyledInput
           placeholder='Add awesome place...'
           onChangeText={this.onChangeInputHandler}
           value={place}
@@ -33,22 +33,23 @@ class PlaceInput extends Component {
                     place:''
                 })
         }} />
-      </View>
+      </InputContainer>
     )
   }
 }
 
-const styles = StyleSheet.create({
 
-  inputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    
-  },
-  input: {
-    height: 40,
-    width: 300,
-  }
-})
+const InputContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin:20px;
+` 
+
+
+const StyledInput = styled.TextInput`
+   height: 40px;
+   width: 300px;
+`
+
 export default PlaceInput
