@@ -19,7 +19,6 @@ class SharePlaceScreen extends Component {
             if(event.id === 'sideDrawerToggle'){
                 this.props.navigator.toggleDrawer({
                     side:'left',
-
                 })
             }
         }

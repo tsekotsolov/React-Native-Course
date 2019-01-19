@@ -42,14 +42,13 @@ class PlaceInput extends Component {
 const InputContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
     margin:20px;
 ` 
 
 
 const StyledInput = styled.TextInput`
    height: 40px;
-   width: 300px;
+   width: 80%;
 `
 
 export default PlaceInput

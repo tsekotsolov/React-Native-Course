@@ -29,7 +29,7 @@ class FindPlaceScreen extends Component {
         })
 
         this.props.navigator.push({
-            screen:'awesome-palces.PlaceDetailScreen',
+            screen:'awesome-places.PlaceDetailScreen',
             title:selectedPlace.place,
             passProps:{
                 selectedPlace

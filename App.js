@@ -13,21 +13,21 @@ const store = configureStore()
 // Register Screens
 
 Navigation.registerComponent(
-  'awesome-palces.Authscreen', () => AuthScreen, store, Provider)
+  'awesome-places.Authscreen', () => AuthScreen, store, Provider)
 Navigation.registerComponent(
-  'awesome-palces.SharePlaceScreen', () => SharePlaceScreen, store, Provider)
+  'awesome-places.SharePlaceScreen', () => SharePlaceScreen, store, Provider)
 Navigation.registerComponent(
-  'awesome-palces.FindPlaceScreen', () => FindPlaceScreen, store, Provider)
+  'awesome-places.FindPlaceScreen', () => FindPlaceScreen, store, Provider)
 Navigation.registerComponent(
-  'awesome-palces.PlaceDetailScreen', () => PlaceDetailScreen, store, Provider)
+  'awesome-places.PlaceDetailScreen', () => PlaceDetailScreen, store, Provider)
 Navigation.registerComponent(
-  'awesome-palces.SideDrawer', () => SideDrawer)
+  'awesome-places.SideDrawer', () => SideDrawer)
 
 // Start App
 
 Navigation.startSingleScreenApp({
   screen: {
-    screen: 'awesome-palces.Authscreen',
+    screen: 'awesome-places.Authscreen',
     title: 'Login'
   }
 })
