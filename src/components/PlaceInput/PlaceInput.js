@@ -45,7 +45,6 @@ const InputContainer = styled.View`
     margin:20px;
 ` 
 
-
 const StyledInput = styled.TextInput`
    height: 40px;
    width: 80%;
