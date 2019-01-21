@@ -1,27 +1,22 @@
 import React, { Component } from 'react'
-import { View, Text, Dimensions, StyleSheet } from 'react-native'
+import { Text, Dimensions } from 'react-native'
+import styled from 'styled-components'
 
 class SideDrawer extends Component {
   render () {
     return (
-      <View style={[
-        styles.container,
-        { width: Dimensions.get('window').width * 0.8 }
-      ]}
-      >
+      <StyledSideDrawer>
         <Text>SideDrawer</Text>
-      </View>
+      </StyledSideDrawer>
     )
   }
 }
 
-const styles = StyleSheet.create({
-
-  container: {
-    paddingTop: 22,
-    backgroundColor: 'white',
-    flex: 1
-  }
-})
+const StyledSideDrawer = styled.View`
+    padding-top: 22;
+    background-color: white;
+    flex: 1;
+    width:${Dimensions.get('window').width * 0.8};
+`
 
 export default SideDrawer
