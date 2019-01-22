@@ -5,6 +5,7 @@ import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
 import HeadingText from '../../components/UI/HeadingText/HeadingText'
 import MainText from '../../components/UI/MainText/MainText'
 import backgroundImage from '../../assets/background.jpg'
+import ButtonWithBackground from '../../components/UI/Button/ButtonWithBackground'
 
  class AuthScreen extends Component {
 
@@ -19,13 +20,13 @@ import backgroundImage from '../../assets/background.jpg'
           <MainText>
            <HeadingText>Please Log In</HeadingText>
           </MainText>
-           <Button title='Switch to Login' />
+           <ButtonWithBackground color='#29aaf4'>Switch to Login</ButtonWithBackground >
            <View style={styles.inputContainer}>
-            <DefaultInput placeholder='Enter your email' style={styles.input} />
+            <DefaultInput placeholder='Enter your email'/>
             <DefaultInput placeholder='Password' />
             <DefaultInput placeholder='Confirm Password' />
            </View>
-           <Button title="Login" onPress={this.loginHandler} />
+           <ButtonWithBackground onPress={this.loginHandler} color='#29aaf4'>Login</ButtonWithBackground >
         </View> 
       </ImageBackground>
     )
@@ -39,20 +40,13 @@ const styles = StyleSheet.create({
    alignItems:'center',
    justifyContent:'center'
   },
-
   inputContainer:{
     width:'80%'
   },
-  
-  input: {
-    borderColor: 'red',
-  },
-
   backgroundImage:{
     width:'100%',
     flex:1
   }
-
 })
 
 export default AuthScreen
