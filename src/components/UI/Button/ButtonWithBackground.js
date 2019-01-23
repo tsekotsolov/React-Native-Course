@@ -1,15 +1,27 @@
 import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import { TouchableOpacity, Text, TouchableNativeFeedback, Platform } from 'react-native'
 import styled from 'styled-components'
 
 const ButtonWithBackground = props => {
+  const content = (
+    <StyledView {...props}>
+      <Text>
+        {props.children}
+      </Text>
+    </StyledView>
+  )
+
+  if (Platform.OS === 'android') {
+    return (
+      <TouchableNativeFeedback onPress={props.onPress}>
+        {content}
+      </TouchableNativeFeedback>
+    )
+  }
+
   return (
     <TouchableOpacity onPress={props.onPress}>
-      <StyledView {...props}>
-        <Text>
-          {props.children}
-        </Text>
-      </StyledView>
+      {content}
     </TouchableOpacity>
   )
 }

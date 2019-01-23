@@ -1,11 +1,12 @@
 import { Navigation } from 'react-native-navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { Platform } from 'react-native'
 
 const startTabs = () => {
   Promise.all([
-    Icon.getImageSource('md-map', 30),
-    Icon.getImageSource('md-share-alt', 30),
-    Icon.getImageSource('md-menu', 30)
+    Icon.getImageSource(Platform.OS === 'android' ? 'md-map' : 'ios-map', 30),
+    Icon.getImageSource(Platform.OS === 'android' ? 'md-share-alt' : 'ios-share', 30),
+    Icon.getImageSource(Platform.OS === 'android' ? 'md-menu' : 'ios-menu', 30)
   ]).then((source) => {
     Navigation.startTabBasedApp({
       tabs: [
@@ -37,6 +38,12 @@ const startTabs = () => {
           }
         }
       ],
+      tabsStyle: {
+        tabBarSelectedButtonColor: 'orange'
+      },
+      appStyle: {
+        tabBarSelectedButtonColor: 'orange'
+      },
       drawer: {
         left: {
           screen: 'awesome-places.SideDrawer'
