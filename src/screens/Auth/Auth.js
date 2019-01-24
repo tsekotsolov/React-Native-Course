@@ -6,12 +6,28 @@ import HeadingText from '../../components/UI/HeadingText/HeadingText'
 import MainText from '../../components/UI/MainText/MainText'
 import backgroundImage from '../../assets/background.jpg'
 import ButtonWithBackground from '../../components/UI/Button/ButtonWithBackground'
+import validateInput from '../../utility/validation'
 
  class AuthScreen extends Component {
 
   state = {
-    viewMode:Dimensions.get('window').height>500 ? 'portrait' : 'landscape'
+    viewMode:Dimensions.get('window').height>500 ? 'portrait' : 'landscape',
+    inputFieldsData: {
+      email:{
+        value:'',
+        isValid:false
+      },
+      password:{
+        value:'',
+        isValid:false
+      },
+      confirmPassword:{
+        value:'',
+        isValid:false
+      },
+    }
   }
+
 
   onDeviceOrientationChange = _ => {
     this.setState({
@@ -29,6 +45,36 @@ import ButtonWithBackground from '../../components/UI/Button/ButtonWithBackgroun
 
   loginHandler = _ => { 
     startMainTabs()
+  }
+
+  inputHandler = (value,fieldType,controlValue) => {
+
+    this.setState(prevState => {
+      return {
+        inputFieldsData:{
+          ...prevState.inputFieldsData,
+          [fieldType]:{
+            value:value,
+            isValid:validateInput(value,fieldType,controlValue)
+          },
+        }
+      }
+    })
+
+    if(fieldType==='password'){
+      this.setState(prevState => {
+        return {
+          inputFieldsData:{
+            ...prevState.inputFieldsData,
+            confirmPassword:{
+              value:prevState.inputFieldsData.confirmPassword.value,
+              isValid: validateInput(prevState.inputFieldsData.confirmPassword.value,'confirmPassword',value)
+            }
+          }
+        }
+      })
+    }
+    
   }
 
   render() {
@@ -49,7 +95,12 @@ import ButtonWithBackground from '../../components/UI/Button/ButtonWithBackgroun
           {headingText}
            <ButtonWithBackground color='#29aaf4'>Switch to Login</ButtonWithBackground >
            <View style={styles.inputContainer}>
-            <DefaultInput placeholder='Enter your email'/>
+
+            <DefaultInput 
+              placeholder='Enter your email' 
+              value={this.state.inputFieldsData.email.value}
+              onChangeText={(value)=>this.inputHandler(value,'email')}/>
+
             <View style={this.state.viewMode==='portrait'
               ? styles.passwordContainerPortrait
               : styles.passwordContainerLandscape
@@ -58,14 +109,20 @@ import ButtonWithBackground from '../../components/UI/Button/ButtonWithBackgroun
                 ? styles.passwordWrapperPortrait
                 :styles.passwordWrapperLandscape
               }>
-                <DefaultInput placeholder='Password' />
+
+                <DefaultInput placeholder='Password' 
+                  onChangeText={(value)=>this.inputHandler(value,'password')}/>
               </View>
+
               <View style={this.state.viewMode==='portrait'
                 ? styles.passwordWrapperPortrait
                 :styles.passwordWrapperLandscape
               }>  
-                <DefaultInput placeholder='Confirm Password' />
+                <DefaultInput 
+                  placeholder='Confirm Password' 
+                  onChangeText={(value)=>this.inputHandler(value,'confirmPassword',this.state.inputFieldsData.password.value)} />
               </View>
+
             </View>
            </View>
 
