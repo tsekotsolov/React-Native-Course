@@ -15,19 +15,18 @@ import validateInput from '../../utility/validation'
     inputFieldsData: {
       email:{
         value:'',
-        isValid:false
+        isValid:true
       },
       password:{
         value:'',
-        isValid:false
+        isValid:true
       },
       confirmPassword:{
         value:'',
-        isValid:false
+        isValid:true
       },
     }
   }
-
 
   onDeviceOrientationChange = _ => {
     this.setState({
@@ -53,6 +52,13 @@ import validateInput from '../../utility/validation'
       return {
         inputFieldsData:{
           ...prevState.inputFieldsData,
+          confirmPassword:{
+            ...prevState.inputFieldsData.confirmPassword,
+            isValid: fieldType==='password'
+              ?validateInput(prevState.inputFieldsData.confirmPassword.value,'confirmPassword',value)
+              :prevState.inputFieldsData.confirmPassword.isValid
+          },
+
           [fieldType]:{
             value:value,
             isValid:validateInput(value,fieldType,controlValue)
@@ -60,21 +66,6 @@ import validateInput from '../../utility/validation'
         }
       }
     })
-
-    if(fieldType==='password'){
-      this.setState(prevState => {
-        return {
-          inputFieldsData:{
-            ...prevState.inputFieldsData,
-            confirmPassword:{
-              value:prevState.inputFieldsData.confirmPassword.value,
-              isValid: validateInput(prevState.inputFieldsData.confirmPassword.value,'confirmPassword',value)
-            }
-          }
-        }
-      })
-    }
-    
   }
 
   render() {
@@ -93,13 +84,15 @@ import validateInput from '../../utility/validation'
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
        <View style={styles.container}>
           {headingText}
-           <ButtonWithBackground color='#29aaf4'>Switch to Login</ButtonWithBackground >
+           <ButtonWithBackground color='#29aaf4' isFormValid='true'>Switch to Login</ButtonWithBackground >
            <View style={styles.inputContainer}>
 
             <DefaultInput 
               placeholder='Enter your email' 
               value={this.state.inputFieldsData.email.value}
-              onChangeText={(value)=>this.inputHandler(value,'email')}/>
+              onChangeText={(value)=>this.inputHandler(value,'email')}
+              isValid={this.state.inputFieldsData.email.isValid}
+              />
 
             <View style={this.state.viewMode==='portrait'
               ? styles.passwordContainerPortrait
@@ -111,7 +104,8 @@ import validateInput from '../../utility/validation'
               }>
 
                 <DefaultInput placeholder='Password' 
-                  onChangeText={(value)=>this.inputHandler(value,'password')}/>
+                  onChangeText={(value)=>this.inputHandler(value,'password')}
+                  isValid={this.state.inputFieldsData.password.isValid}/>
               </View>
 
               <View style={this.state.viewMode==='portrait'
@@ -120,13 +114,25 @@ import validateInput from '../../utility/validation'
               }>  
                 <DefaultInput 
                   placeholder='Confirm Password' 
-                  onChangeText={(value)=>this.inputHandler(value,'confirmPassword',this.state.inputFieldsData.password.value)} />
+                  onChangeText={(value)=>this.inputHandler(value,'confirmPassword',this.state.inputFieldsData.password.value)} 
+                  isValid={this.state.inputFieldsData.confirmPassword.isValid}
+                  />
               </View>
 
             </View>
            </View>
 
-           <ButtonWithBackground onPress={this.loginHandler} color='#29aaf4'>Login</ButtonWithBackground >
+           <ButtonWithBackground 
+           onPress={this.loginHandler} 
+           color='#29aaf4'
+           isFormValid={this.state.inputFieldsData.email.isValid
+            && this.state.inputFieldsData.password.isValid
+            && this.state.inputFieldsData.confirmPassword.isValid
+            &&this.state.inputFieldsData.email.value
+            &&this.state.inputFieldsData.password.value
+            &&this.state.inputFieldsData.confirmPassword.value
+          }
+           >Login</ButtonWithBackground >
         </View> 
       </ImageBackground>
     )

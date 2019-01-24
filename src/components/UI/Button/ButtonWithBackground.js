@@ -11,19 +11,22 @@ const ButtonWithBackground = props => {
     </StyledView>
   )
 
-  if (Platform.OS === 'android') {
+  if (!props.isFormValid) {
+    return content
+  } else {
+    if (Platform.OS === 'android') {
+      return (
+        <TouchableNativeFeedback onPress={props.onPress}>
+          {content}
+        </TouchableNativeFeedback>
+      )
+    }
     return (
-      <TouchableNativeFeedback onPress={props.onPress}>
+      <TouchableOpacity onPress={props.onPress}>
         {content}
-      </TouchableNativeFeedback>
+      </TouchableOpacity>
     )
   }
-
-  return (
-    <TouchableOpacity onPress={props.onPress}>
-      {content}
-    </TouchableOpacity>
-  )
 }
 
 const StyledView = styled.View`
@@ -31,8 +34,8 @@ const StyledView = styled.View`
     margin: 5px;
     border-radius: 5px;
     border-width: 1px;
-    border-color: black;
-    background-color:${props => props.color};
+    border-color: ${props => props.isFormValid ? 'black' : '#eee'};
+    background-color:${props => props.isFormValid ? props.color : '#eee'};
 `
 
 export default ButtonWithBackground

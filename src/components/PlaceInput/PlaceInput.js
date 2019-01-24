@@ -26,6 +26,7 @@ class PlaceInput extends Component {
           placeholder='Add awesome place...'
           onChangeText={this.onChangeInputHandler}
           value={place}
+          isValid={true}
         />
         <Button title='Add Place' onPress={ _ =>{
            place !== '' &&
