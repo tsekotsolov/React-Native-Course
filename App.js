@@ -28,6 +28,6 @@ Navigation.registerComponent(
 Navigation.startSingleScreenApp({
   screen: {
     screen: 'awesome-places.Authscreen',
-    title: 'Login'
+    title: 'Authentication'
   }
 })

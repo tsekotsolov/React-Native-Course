@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Dimensions, StyleSheet, ImageBackground } from 'react-native'
+import { View, Dimensions, StyleSheet, ImageBackground,KeyboardAvoidingView } from 'react-native'
 import startMainTabs from '../MainTabs/startMainTabs'
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
 import HeadingText from '../../components/UI/HeadingText/HeadingText'
@@ -14,6 +14,7 @@ import {tryAuth} from '../../store/actions/index'
 
   state = {
     viewMode:Dimensions.get('window').height>500 ? 'portrait' : 'landscape',
+    isInLoginMode:true,
     inputFieldsData: {
       email:{
         value:'',
@@ -44,6 +45,15 @@ import {tryAuth} from '../../store/actions/index'
     Dimensions.removeEventListener('change', this.onDeviceOrientationChange)
   }
 
+  switchAuthModeHandler = () =>{
+    this.setState(prevState=>{
+      return{
+        isInLoginMode: !prevState.isInLoginMode
+      }
+      
+    })
+  }
+
   loginHandler = _ => { 
     const authData = {
       email:this.state.inputFieldsData.email.value,
@@ -60,10 +70,8 @@ import {tryAuth} from '../../store/actions/index'
         inputFieldsData:{
           ...prevState.inputFieldsData,
           confirmPassword:{
-            ...prevState.inputFieldsData.confirmPassword,
-            isValid: fieldType==='password'
-              ?validateInput(prevState.inputFieldsData.confirmPassword.value,'confirmPassword',value)
-              :prevState.inputFieldsData.confirmPassword.isValid
+            value: fieldType === 'password' ? '' : prevState.inputFieldsData.confirmPassword.value,
+            isValid: fieldType === 'password' ? false : prevState.inputFieldsData.confirmPassword.isValid
           },
 
           [fieldType]:{
@@ -77,21 +85,41 @@ import {tryAuth} from '../../store/actions/index'
 
   render() {
 
-    let headingText = null
+    let headingText = null 
+
+    let isFormValid = this.state.inputFieldsData.email.isValid
+      && this.state.inputFieldsData.password.isValid
+      && this.state.inputFieldsData.confirmPassword.isValid
+      &&this.state.inputFieldsData.email.value
+      &&this.state.inputFieldsData.password.value
+      &&this.state.inputFieldsData.confirmPassword.value
+
+    if(this.state.isInLoginMode){
+      isFormValid = this.state.inputFieldsData.email.isValid
+      && this.state.inputFieldsData.password.isValid
+      &&this.state.inputFieldsData.email.value
+      &&this.state.inputFieldsData.password.value
+    }
+    
 
     if(this.state.viewMode==='portrait'){
       headingText=(  
       <MainText>
-        <HeadingText>Please Log In</HeadingText>
+        <HeadingText>{this.state.isInLoginMode ? 'Please Log In' : 'Please Sign Up' }</HeadingText>
        </MainText>
        )
     }
 
     return (
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-       <View style={styles.container}>
+       <KeyboardAvoidingView KeyboardAvoidingview style={styles.container} behavior='padding'>
           {headingText}
-           <ButtonWithBackground color='#29aaf4' isFormValid='true'>Switch to Login</ButtonWithBackground >
+           <ButtonWithBackground 
+           color='#29aaf4' 
+           isFormValid='true'
+           onPress={this.switchAuthModeHandler}>
+              {this.state.isInLoginMode ? 'Switch To Sign Up' : 'Switch To Login'}
+           </ButtonWithBackground >
            <View style={styles.inputContainer}>
 
             <DefaultInput 
@@ -99,32 +127,44 @@ import {tryAuth} from '../../store/actions/index'
               value={this.state.inputFieldsData.email.value}
               onChangeText={(value)=>this.inputHandler(value,'email')}
               isValid={this.state.inputFieldsData.email.isValid}
+              autoCapitalize='none'
+              autoCorrect={false}
+              keyboardType='email-address'
               />
 
             <View style={this.state.viewMode==='portrait'
               ? styles.passwordContainerPortrait
               : styles.passwordContainerLandscape
             }>
-              <View style={this.state.viewMode==='portrait'
+              <View style={this.state.viewMode==='portrait' || this.state.isInLoginMode
                 ? styles.passwordWrapperPortrait
                 :styles.passwordWrapperLandscape
               }>
 
                 <DefaultInput placeholder='Password' 
                   onChangeText={(value)=>this.inputHandler(value,'password')}
-                  isValid={this.state.inputFieldsData.password.isValid}/>
+                  secureTextEntry
+                  isValid={this.state.inputFieldsData.password.isValid}
+                  value={this.state.inputFieldsData.password.value}/>
+                  
               </View>
 
-              <View style={this.state.viewMode==='portrait'
+              {this.state.isInLoginMode
+              ? null
+              :<View style={this.state.viewMode==='portrait'
                 ? styles.passwordWrapperPortrait
                 :styles.passwordWrapperLandscape
-              }>  
-                <DefaultInput 
-                  placeholder='Confirm Password' 
-                  onChangeText={(value)=>this.inputHandler(value,'confirmPassword',this.state.inputFieldsData.password.value)} 
-                  isValid={this.state.inputFieldsData.confirmPassword.isValid}
-                  />
-              </View>
+            }> 
+              <DefaultInput 
+                placeholder='Confirm Password' 
+                secureTextEntry
+                onChangeText={(value)=>this.inputHandler(value,'confirmPassword',this.state.inputFieldsData.password.value)} 
+                isValid={this.state.inputFieldsData.confirmPassword.isValid}
+                value={this.state.inputFieldsData.confirmPassword.value}
+                />
+            </View>
+            }
+              
 
             </View>
            </View>
@@ -132,15 +172,9 @@ import {tryAuth} from '../../store/actions/index'
            <ButtonWithBackground 
            onPress={this.loginHandler} 
            color='#29aaf4'
-           isFormValid={this.state.inputFieldsData.email.isValid
-            && this.state.inputFieldsData.password.isValid
-            && this.state.inputFieldsData.confirmPassword.isValid
-            &&this.state.inputFieldsData.email.value
-            &&this.state.inputFieldsData.password.value
-            &&this.state.inputFieldsData.confirmPassword.value
-          }
-           >Login</ButtonWithBackground >
-        </View> 
+           isFormValid = {isFormValid}
+           >Submit</ButtonWithBackground>
+        </KeyboardAvoidingView> 
       </ImageBackground>
     )
   }

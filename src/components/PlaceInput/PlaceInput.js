@@ -28,7 +28,7 @@ class PlaceInput extends Component {
           value={place}
           isValid={true}
         />
-        <Button title='Add Place' onPress={ _ =>{
+        <Button title='Add Place' disabled={place.length<6} onPress = { _ =>{
            place !== '' &&
                 this.props.addPlaces(place)
                 this.setState({
