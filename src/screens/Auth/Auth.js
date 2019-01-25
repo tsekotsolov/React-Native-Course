@@ -7,6 +7,8 @@ import MainText from '../../components/UI/MainText/MainText'
 import backgroundImage from '../../assets/background.jpg'
 import ButtonWithBackground from '../../components/UI/Button/ButtonWithBackground'
 import validateInput from '../../utility/validation'
+import {connect} from 'react-redux'
+import {tryAuth} from '../../store/actions/index'
 
  class AuthScreen extends Component {
 
@@ -43,6 +45,11 @@ import validateInput from '../../utility/validation'
   }
 
   loginHandler = _ => { 
+    const authData = {
+      email:this.state.inputFieldsData.email.value,
+      password:this.state.inputFieldsData.password.value
+    }
+    this.props.onLogin(authData)
     startMainTabs()
   }
 
@@ -170,4 +177,10 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AuthScreen
+const mapDispatchToProps = dispath => { 
+  return {
+    onLogin: authData => dispath(tryAuth(authData))
+  }
+}
+
+export default connect(null,mapDispatchToProps)(AuthScreen)
