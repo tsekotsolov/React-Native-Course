@@ -9,14 +9,17 @@ const reducer = (state = initialState, action) => {
     case ADD_PLACE:
       return {
         ...state,
-        places: [...state.places,
+        places: [
+          ...state.places,
           {
             key: Math.random().toString(),
             place: action.payload,
             image: {
-              uri: 'https://usit-blog.s3-eu-west-1.amazonaws.com/wp-content/uploads/2018/02/26140820/Cook-Islands-768x561.jpg'
+              uri:
+                'https://usit-blog.s3-eu-west-1.amazonaws.com/wp-content/uploads/2018/02/26140820/Cook-Islands-768x561.jpg'
             }
-          }]
+          }
+        ]
       }
 
     case DELETE_PLACE:
@@ -25,7 +28,6 @@ const reducer = (state = initialState, action) => {
         places: state.places.filter(place => {
           return place.key !== action.payload
         })
-
       }
 
     default:

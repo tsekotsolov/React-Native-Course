@@ -4,15 +4,16 @@ import ListItem from '../ListItem/ListItem'
 
 const PlaceList = props => {
   return (
-    <FlatList style={styles.listContainer}
+    <FlatList
+      style={styles.listContainer}
       data={props.places}
       renderItem={({ item }) => (
         <ListItem
           place={item.place}
           placeImage={item.image}
-          onItemPressed={() => props.selectPlace(item.key)} />
-      )
-      }
+          onItemPressed={() => props.selectPlace(item.key)}
+        />
+      )}
     />
   )
 }

@@ -9,7 +9,10 @@ class SideDrawer extends Component {
       <StyledSideDrawer>
         <TouchableOpacity>
           <DrawerItem>
-            <DrawerItemIcon name={Platform.OS === 'android' ? 'md-log-out' : 'ios-log-out'} size={30} />
+            <DrawerItemIcon
+              name={Platform.OS === 'android' ? 'md-log-out' : 'ios-log-out'}
+              size={30}
+            />
             <Text>Sign out</Text>
           </DrawerItem>
         </TouchableOpacity>
@@ -19,22 +22,22 @@ class SideDrawer extends Component {
 }
 
 const StyledSideDrawer = styled.View`
-    padding-top: 22;
-    background-color: white;
-    flex: 1;
-    width:${Dimensions.get('window').width * 0.8};
+  padding-top: 22;
+  background-color: white;
+  flex: 1;
+  width: ${Dimensions.get('window').width * 0.8};
 `
 
 const DrawerItem = styled.View`
-    flex-direction: row;
-    align-items: center;
-    background-color: #eee;
-    padding:15px;
+  flex-direction: row;
+  align-items: center;
+  background-color: #eee;
+  padding: 15px;
 `
 
 const DrawerItemIcon = styled(Icon)`
-    margin-right: 15px;
-    color:red;
+  margin-right: 15px;
+  color: red;
 `
 
 export default SideDrawer

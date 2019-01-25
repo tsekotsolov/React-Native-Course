@@ -1,13 +1,16 @@
 import React from 'react'
-import { TouchableOpacity, Text, TouchableNativeFeedback, Platform } from 'react-native'
+import {
+  TouchableOpacity,
+  Text,
+  TouchableNativeFeedback,
+  Platform
+} from 'react-native'
 import styled from 'styled-components'
 
 const ButtonWithBackground = props => {
   const content = (
     <StyledView {...props}>
-      <Text>
-        {props.children}
-      </Text>
+      <Text>{props.children}</Text>
     </StyledView>
   )
 
@@ -22,20 +25,18 @@ const ButtonWithBackground = props => {
       )
     }
     return (
-      <TouchableOpacity onPress={props.onPress}>
-        {content}
-      </TouchableOpacity>
+      <TouchableOpacity onPress={props.onPress}>{content}</TouchableOpacity>
     )
   }
 }
 
 const StyledView = styled.View`
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-    border-width: 1px;
-    border-color: ${props => props.isFormValid ? 'black' : '#eee'};
-    background-color:${props => props.isFormValid ? props.color : '#eee'};
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: ${props => (props.isFormValid ? 'black' : '#eee')};
+  background-color: ${props => (props.isFormValid ? props.color : '#eee')};
 `
 
 export default ButtonWithBackground

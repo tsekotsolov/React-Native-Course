@@ -15,19 +15,19 @@ const PickImage = () => {
 }
 
 const MainContainer = styled.View`
-    width:100%;
-    align-items:center;
+  width: 100%;
+  align-items: center;
 `
 
 const ContainerImage = styled.Image`
-    border-width:1;
-    border-color:black;
-    width:80%;
-    height:150;
+  border-width: 1;
+  border-color: black;
+  width: 80%;
+  height: 150;
 `
 
 const ButtonView = styled.View`
-    margin:8px;
+  margin: 8px;
 `
 
 export default PickImage
