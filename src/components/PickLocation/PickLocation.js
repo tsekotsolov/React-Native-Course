@@ -1,19 +1,40 @@
 import React from 'react'
-import { Button, Text } from 'react-native'
+import { Button, Text, StyleSheet, Dimensions } from 'react-native'
 import styled from 'styled-components'
+import MapView from 'react-native-maps'
 
-const PickLocation = () => {
-  return (
-    <MainContainer>
-      <TextContainer>
-        <Text>Map</Text>
-      </TextContainer>
-      <ButtonView>
-        <Button title="Locate Me" onPress={() => alert('Pick Location')} />
-      </ButtonView>
-    </MainContainer>
-  )
+class PickLocation extends React.Component {
+
+  state = {
+    focusedLocation: {
+      latitude: 37.7900352,
+      longitude: -122.4013726,
+      latitudeDelta: 0.0122,
+      longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122
+    }
+  }
+  render() {
+    return (
+      <MainContainer>
+        <MapView
+          initialRegion={this.state.focusedLocation}
+          style={styles.map}
+        />
+        <ButtonView>
+          <Button title='Locate Me' onPress={() => alert('Pick Location')} />
+        </ButtonView>
+      </MainContainer>
+    )
+  }
 }
+
+
+const styles = StyleSheet.create({
+  map: {
+    width: '100%',
+    height: 250
+  }
+})
 
 const MainContainer = styled.View`
   width: 100%;

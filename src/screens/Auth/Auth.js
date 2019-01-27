@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
-import { View, Dimensions, StyleSheet, ImageBackground, KeyboardAvoidingView } from 'react-native'
+import {
+  View,
+  Dimensions,
+  StyleSheet,
+  ImageBackground,
+  KeyboardAvoidingView
+} from 'react-native'
 import startMainTabs from '../MainTabs/startMainTabs'
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
 import HeadingText from '../../components/UI/HeadingText/HeadingText'
@@ -36,11 +42,11 @@ class AuthScreen extends Component {
     })
   }
 
-  componentWillMount () {
+  componentWillMount() {
     Dimensions.addEventListener('change', this.onDeviceOrientationChange)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     Dimensions.removeEventListener('change', this.onDeviceOrientationChange)
   }
 
@@ -67,8 +73,14 @@ class AuthScreen extends Component {
         inputFieldsData: {
           ...prevState.inputFieldsData,
           confirmPassword: {
-            value: fieldType === 'password' ? '' : prevState.inputFieldsData.confirmPassword.value,
-            isValid: fieldType === 'password' ? false : prevState.inputFieldsData.confirmPassword.isValid
+            value:
+              fieldType === 'password'
+                ? ''
+                : prevState.inputFieldsData.confirmPassword.value,
+            isValid:
+              fieldType === 'password'
+                ? false
+                : prevState.inputFieldsData.confirmPassword.isValid
           },
 
           [fieldType]: {
@@ -80,7 +92,7 @@ class AuthScreen extends Component {
     })
   }
 
-  render () {
+  render() {
     let headingText = null
 
     let isFormValid =
@@ -102,27 +114,33 @@ class AuthScreen extends Component {
     if (this.state.viewMode === 'portrait') {
       headingText = (
         <MainText>
-          <HeadingText>{this.state.isInLoginMode ? 'Please Log In' : 'Please Sign Up'}</HeadingText>
+          <HeadingText>
+            {this.state.isInLoginMode ? 'Please Log In' : 'Please Sign Up'}
+          </HeadingText>
         </MainText>
       )
     }
 
     return (
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-        <KeyboardAvoidingView style={styles.container} behavior='padding'>
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
           {headingText}
-          <ButtonWithBackground color='#29aaf4' isFormValid='true' onPress={this.switchAuthModeHandler}>
+          <ButtonWithBackground
+            color="#29aaf4"
+            isFormValid="true"
+            onPress={this.switchAuthModeHandler}
+          >
             {this.state.isInLoginMode ? 'Switch To Sign Up' : 'Switch To Login'}
           </ButtonWithBackground>
           <View style={styles.inputContainer}>
             <DefaultInput
-              placeholder='Enter your email'
+              placeholder="Enter your email"
               value={this.state.inputFieldsData.email.value}
               onChangeText={value => this.inputHandler(value, 'email')}
               isValid={this.state.inputFieldsData.email.isValid}
-              autoCapitalize='none'
+              autoCapitalize="none"
               autoCorrect={false}
-              keyboardType='email-address'
+              keyboardType="email-address"
             />
 
             <View
@@ -140,7 +158,7 @@ class AuthScreen extends Component {
                 }
               >
                 <DefaultInput
-                  placeholder='Password'
+                  placeholder="Password"
                   onChangeText={value => this.inputHandler(value, 'password')}
                   secureTextEntry
                   isValid={this.state.inputFieldsData.password.isValid}
@@ -157,10 +175,14 @@ class AuthScreen extends Component {
                   }
                 >
                   <DefaultInput
-                    placeholder='Confirm Password'
+                    placeholder="Confirm Password"
                     secureTextEntry
                     onChangeText={value =>
-                      this.inputHandler(value, 'confirmPassword', this.state.inputFieldsData.password.value)
+                      this.inputHandler(
+                        value,
+                        'confirmPassword',
+                        this.state.inputFieldsData.password.value
+                      )
                     }
                     isValid={this.state.inputFieldsData.confirmPassword.isValid}
                     value={this.state.inputFieldsData.confirmPassword.value}
@@ -170,7 +192,11 @@ class AuthScreen extends Component {
             </View>
           </View>
 
-          <ButtonWithBackground onPress={this.loginHandler} color='#29aaf4' isFormValid={isFormValid}>
+          <ButtonWithBackground
+            onPress={this.loginHandler}
+            color="#29aaf4"
+            isFormValid={isFormValid}
+          >
             Submit
           </ButtonWithBackground>
         </KeyboardAvoidingView>
@@ -215,7 +241,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(AuthScreen)
+export default connect(null, mapDispatchToProps)(AuthScreen)
