@@ -24,7 +24,11 @@ class SharePlaceScreen extends Component {
       value: null,
       isValid: false
     },
-    place: ''
+    place: '',
+    image: {
+      value: null,
+      isValid: false
+    }
   }
 
   onNavigatorEvent = event => {
@@ -37,8 +41,8 @@ class SharePlaceScreen extends Component {
     }
   }
 
-  placesAddedHandler = (name, location) => {
-    this.props.onAddPlace(name, location)
+  placesAddedHandler = (name, location, image) => {
+    this.props.onAddPlace(name, location, image)
   }
 
   locationPickHandler = location => {
@@ -59,6 +63,18 @@ class SharePlaceScreen extends Component {
     })
   }
 
+  imagePickedHandler = image => {
+    this.setState(prevState => {
+      return {
+        image: {
+          ...prevState.image,
+          value: image,
+          isValid: true
+        }
+      }
+    })
+  }
+
   render() {
     return (
       <ScrollView>
@@ -66,7 +82,7 @@ class SharePlaceScreen extends Component {
           <MainText>
             <HeadingText>Share a place with us!</HeadingText>
           </MainText>
-          <PickImage />
+          <PickImage imagePickedHandler={this.imagePickedHandler} />
           <PickLocation locationPickHandler={this.locationPickHandler} />
           <InputContainer>
             <StyledInput
@@ -77,9 +93,17 @@ class SharePlaceScreen extends Component {
             />
             <Button
               title="Add Place"
-              disabled={this.state.place.length < 3 || !this.state.location.isValid}
+              disabled={
+                this.state.place.length < 3 ||
+                !this.state.location.isValid ||
+                !this.state.image.isValid
+              }
               onPress={_ => {
-                this.placesAddedHandler(this.state.place, this.state.location.value)
+                this.placesAddedHandler(
+                  this.state.place,
+                  this.state.location.value,
+                  this.state.image.value
+                )
                 this.setState({
                   place: ''
                 })
@@ -94,7 +118,8 @@ class SharePlaceScreen extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddPlace: (placeName, location) => dispatch(addPlace(placeName, location))
+    onAddPlace: (placeName, location, image) =>
+      dispatch(addPlace(placeName, location, image))
   }
 }
 
@@ -113,7 +138,7 @@ const InputContainer = styled.View`
 const StyledInput = styled(DefaultInput)`
   height: 40px;
   width: 90%;
-  margin-right:10px;
+  margin-right: 10px;
 `
 
 export default connect(null, mapDispatchToProps)(SharePlaceScreen)

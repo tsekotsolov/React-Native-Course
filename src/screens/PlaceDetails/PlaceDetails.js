@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  View,
-  TouchableOpacity,
-  Platform,
-  Dimensions,
-} from 'react-native'
+import { View, TouchableOpacity, Platform, Dimensions } from 'react-native'
 import styled from 'styled-components'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { connect } from 'react-redux'

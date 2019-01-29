@@ -1,9 +1,9 @@
 import { ADD_PLACE, DELETE_PLACE } from './actionTypes'
 
-export const addPlace = (place, location) => {
+export const addPlace = (place, location, image) => {
   return {
     type: ADD_PLACE,
-    payload: { place, location }
+    payload: { place, location, image }
   }
 }
 

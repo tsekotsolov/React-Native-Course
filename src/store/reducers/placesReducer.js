@@ -15,8 +15,8 @@ const reducer = (state = initialState, action) => {
             key: Math.random().toString(),
             place: action.payload.place,
             image: {
-              uri:
-                'https://usit-blog.s3-eu-west-1.amazonaws.com/wp-content/uploads/2018/02/26140820/Cook-Islands-768x561.jpg'
+              uri: action.payload.image.uri,
+              base64: action.payload.image.base64
             },
             location: action.payload.location
           }
