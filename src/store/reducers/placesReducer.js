@@ -13,11 +13,12 @@ const reducer = (state = initialState, action) => {
           ...state.places,
           {
             key: Math.random().toString(),
-            place: action.payload,
+            place: action.payload.place,
             image: {
               uri:
                 'https://usit-blog.s3-eu-west-1.amazonaws.com/wp-content/uploads/2018/02/26140820/Cook-Islands-768x561.jpg'
-            }
+            },
+            location: action.payload.location
           }
         ]
       }
