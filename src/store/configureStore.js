@@ -2,7 +2,7 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import placesReducer from './reducers/placesReducer'
 import thunk from 'redux-thunk'
 
-const rootReduser = combineReducers({
+const rootReducer = combineReducers({
   places: placesReducer
 })
 
@@ -12,7 +12,7 @@ if (__DEV__) {
 }
 
 const configureStore = () => {
-  return createStore(rootReduser, composeEnchancers(applyMiddleware(thunk)))
+  return createStore(rootReducer, composeEnchancers(applyMiddleware(thunk)))
 }
 
 export default configureStore
