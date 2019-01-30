@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Button } from 'react-native'
+import { ScrollView, Button, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { addPlace } from '../../store/actions/index'
 import styled from 'styled-components'
@@ -76,6 +76,30 @@ class SharePlaceScreen extends Component {
   }
 
   render() {
+    let submitButton = (
+      <Button
+        title="Add Place"
+        disabled={
+          this.state.place.length < 3 ||
+          !this.state.location.isValid ||
+          !this.state.image.isValid
+        }
+        onPress={_ => {
+          this.placesAddedHandler(
+            this.state.place,
+            this.state.location.value,
+            this.state.image.value
+          )
+          this.setState({
+            place: ''
+          })
+        }}
+      />
+    )
+
+    if (this.props.isLoading === true) {
+      submitButton =  <ActivityIndicator/>
+    }
     return (
       <ScrollView>
         <Container>
@@ -91,24 +115,7 @@ class SharePlaceScreen extends Component {
               value={this.state.place}
               isValid={true}
             />
-            <Button
-              title="Add Place"
-              disabled={
-                this.state.place.length < 3 ||
-                !this.state.location.isValid ||
-                !this.state.image.isValid
-              }
-              onPress={_ => {
-                this.placesAddedHandler(
-                  this.state.place,
-                  this.state.location.value,
-                  this.state.image.value
-                )
-                this.setState({
-                  place: ''
-                })
-              }}
-            />
+            {submitButton}
           </InputContainer>
         </Container>
       </ScrollView>
@@ -141,4 +148,10 @@ const StyledInput = styled(DefaultInput)`
   margin-right: 10px;
 `
 
-export default connect(null, mapDispatchToProps)(SharePlaceScreen)
+const mapStateToProps = state => {
+  return {
+    isLoading: state.ui.isLoading
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SharePlaceScreen)

@@ -1,7 +1,9 @@
 import { ADD_PLACE, DELETE_PLACE } from './actionTypes'
+import { uiStartLoading, uiStopLoading } from './index'
 
 export const addPlace = (place, location, image) => {
   return dispatch => {
+    dispatch(uiStartLoading())
     fetch(
       'https://us-central1-awesome-places-1548589948165.cloudfunctions.net/storeImage',
       {
@@ -11,7 +13,11 @@ export const addPlace = (place, location, image) => {
         })
       }
     )
-      .catch(err => console.log(err))
+      .catch(err => {
+        dispatch(uiStopLoading())
+        alert('Something went wrong! Try again!')
+        console.log(err)
+      })
       .then(res => res.json())
       .then(parsedRes => {
         const placeData = {
@@ -27,15 +33,17 @@ export const addPlace = (place, location, image) => {
           }
         )
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        dispatch(uiStopLoading())
+        alert('Something went wrong! Try again!')
+        console.log(err)
+      })
       .then(res => res.json())
-      .then(parsedRes => console.log(parsedRes))
+      .then(parsedRes => {
+        console.log(parsedRes)
+        dispatch(uiStopLoading())
+      })
   }
-
-  // return {
-  //   type: ADD_PLACE,
-  //   payload: { place, location, image }
-  // }
 }
 
 export const deletePlace = key => {
