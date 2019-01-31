@@ -58,13 +58,12 @@ class AuthScreen extends Component {
     })
   }
 
-  loginHandler = _ => {
+  authHandler = _ => {
     const authData = {
       email: this.state.inputFieldsData.email.value,
       password: this.state.inputFieldsData.password.value
     }
-    this.props.onLogin(authData)
-    
+    this.props.onTryAuth(authData, this.state.isInLoginMode)
   }
 
   inputHandler = (value, fieldType, controlValue) => {
@@ -123,7 +122,7 @@ class AuthScreen extends Component {
 
     let submitButton = (
       <ButtonWithBackground
-        onPress={this.loginHandler}
+        onPress={this.authHandler}
         color="#29aaf4"
         isFormValid={isFormValid}
       >
@@ -131,8 +130,8 @@ class AuthScreen extends Component {
       </ButtonWithBackground>
     )
 
-    if(this.props.isLoading){
-      submitButton=<ActivityIndicator />
+    if (this.props.isLoading) {
+      submitButton = <ActivityIndicator />
     }
 
     return (
@@ -244,15 +243,15 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogin: authData => dispatch(tryAuth(authData))
+    onTryAuth: (authData, isInLoginMode) =>
+      dispatch(tryAuth(authData, isInLoginMode))
   }
 }
 
-const mapStateToProps = state =>{
+const mapStateToProps = state => {
   return {
     isLoading: state.ui.isLoading
   }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen)
