@@ -16,7 +16,7 @@ class PlaceDetails extends React.Component {
     return (
       <StyledScrollView>
         <View>
-          <StyledText>{this.props.selectedPlace.place}</StyledText>
+          <StyledText>{this.props.selectedPlace.name}</StyledText>
           <StyledImage source={this.props.selectedPlace.image} />
         </View>
 
