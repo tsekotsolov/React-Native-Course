@@ -1,4 +1,9 @@
-import { ADD_PLACE, DELETE_PLACE, SET_PLACES } from '../actions/actionTypes'
+import {
+  ADD_PLACE,
+  DELETE_PLACE,
+  SET_PLACES,
+  REMOVE_PLACE
+} from '../actions/actionTypes'
 
 const initialState = {
   places: []
@@ -29,7 +34,7 @@ const reducer = (state = initialState, action) => {
         places: action.payload
       }
 
-    case DELETE_PLACE:
+    case REMOVE_PLACE:
       return {
         ...state,
         places: state.places.filter(place => {
