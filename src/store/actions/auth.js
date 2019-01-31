@@ -1,4 +1,6 @@
 import { TRY_AUTH } from './actionTypes'
+import { uiStartLoading, uiStopLoading } from './index'
+import startMainTabs from '../../screens/MainTabs/startMainTabs'
 
 export const tryAuth = authData => {
   return dispatch => {
@@ -8,6 +10,7 @@ export const tryAuth = authData => {
 
 export const authSignup = authData => {
   return dispatch => {
+    dispatch(uiStartLoading())
     fetch(
       'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDz-ESTzaQdVu3hPir9KuAlsRImSWSMcjc',
       {
@@ -17,7 +20,7 @@ export const authSignup = authData => {
           password: authData.password,
           returnSecureToken: true
         }),
-        headers:{
+        headers: {
           'Content-Type': 'application/json'
         }
       }
@@ -25,10 +28,16 @@ export const authSignup = authData => {
       .catch(err => {
         console.log(err)
         alert('Authentication failed! Try again!')
+        dispatch(uiStopLoading())
       })
       .then(res => res.json())
       .then(parsedRes => {
-        console.log(parsedRes)
+        dispatch(uiStopLoading())
+        if (parsedRes.error) {
+          alert('Authentication failed')
+        } else {
+          startMainTabs()
+        }
       })
   }
 }

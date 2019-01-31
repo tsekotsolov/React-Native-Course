@@ -4,9 +4,9 @@ import {
   Dimensions,
   StyleSheet,
   ImageBackground,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ActivityIndicator
 } from 'react-native'
-import startMainTabs from '../MainTabs/startMainTabs'
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
 import HeadingText from '../../components/UI/HeadingText/HeadingText'
 import MainText from '../../components/UI/MainText/MainText'
@@ -64,7 +64,7 @@ class AuthScreen extends Component {
       password: this.state.inputFieldsData.password.value
     }
     this.props.onLogin(authData)
-    startMainTabs()
+    
   }
 
   inputHandler = (value, fieldType, controlValue) => {
@@ -119,6 +119,20 @@ class AuthScreen extends Component {
           </HeadingText>
         </MainText>
       )
+    }
+
+    let submitButton = (
+      <ButtonWithBackground
+        onPress={this.loginHandler}
+        color="#29aaf4"
+        isFormValid={isFormValid}
+      >
+        Submit
+      </ButtonWithBackground>
+    )
+
+    if(this.props.isLoading){
+      submitButton=<ActivityIndicator />
     }
 
     return (
@@ -191,14 +205,7 @@ class AuthScreen extends Component {
               )}
             </View>
           </View>
-
-          <ButtonWithBackground
-            onPress={this.loginHandler}
-            color="#29aaf4"
-            isFormValid={isFormValid}
-          >
-            Submit
-          </ButtonWithBackground>
+          {submitButton}
         </KeyboardAvoidingView>
       </ImageBackground>
     )
@@ -241,4 +248,11 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(AuthScreen)
+const mapStateToProps = state =>{
+  return {
+    isLoading: state.ui.isLoading
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen)
