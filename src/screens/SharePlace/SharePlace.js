@@ -123,12 +123,6 @@ class SharePlaceScreen extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onAddPlace: (placeName, location, image) =>
-      dispatch(addPlace(placeName, location, image))
-  }
-}
 
 const Container = styled.View`
   flex: 1;
@@ -151,6 +145,13 @@ const StyledInput = styled(DefaultInput)`
 const mapStateToProps = state => {
   return {
     isLoading: state.ui.isLoading
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddPlace: (placeName, location, image) =>
+      dispatch(addPlace(placeName, location, image))
   }
 }
 

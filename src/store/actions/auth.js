@@ -1,3 +1,4 @@
+/* global alert, fetch */
 
 import { uiStartLoading, uiStopLoading } from './index'
 import startMainTabs from '../../screens/MainTabs/startMainTabs'

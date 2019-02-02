@@ -1,3 +1,5 @@
+/* global __DEV__, */
+
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import placesReducer from './reducers/placesReducer'
 import uiReducer from './reducers/uiReducer'

@@ -1,3 +1,5 @@
+/* global alert, fetch */
+
 import {
   SET_PLACES,
   REMOVE_PLACE
