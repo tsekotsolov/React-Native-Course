@@ -4,7 +4,7 @@ import {
   SET_PLACES,
   REMOVE_PLACE
 } from './actionTypes'
-import { uiStartLoading, uiStopLoading } from './index'
+import { uiStartLoading, uiStopLoading, getToken } from './index'
 
 export const addPlace = (place, location, image) => {
   return dispatch => {

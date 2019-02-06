@@ -1,7 +1,9 @@
 /* global alert, fetch */
 
 import { uiStartLoading, uiStopLoading } from './index'
+import {SET_AUTH_TOKEN} from './actionTypes'
 import startMainTabs from '../../screens/MainTabs/startMainTabs'
+import { Promise } from 'winjs';
 
 export const tryAuth = (authData, isInLoginMode) => {
   return dispatch => {
@@ -33,11 +35,32 @@ export const tryAuth = (authData, isInLoginMode) => {
       .then(res => res.json())
       .then(parsedRes => {
         dispatch(uiStopLoading())
-        if (parsedRes.error) {
+        if (!parsedRes.idToken) {
           alert('Authentication failed')
         } else {
+          dispatch(setAuthToken(parsedRes.idToken))
           startMainTabs()
         }
       })
   }
+}
+
+export const setAuthToken = token => {
+  return {
+    type: SET_AUTH_TOKEN,
+    payload: token
+  }
+}
+
+export const getToken = () => {
+  return (dispatch, getState) => {
+    const promise = new Promise((resolve,reject) => {
+      const token = getState().auth.token
+      if(!token){
+      reject()
+      } else {
+        resolve(token)
+      }
+   })
+ }
 }
