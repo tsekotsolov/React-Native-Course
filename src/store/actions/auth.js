@@ -3,7 +3,6 @@
 import { uiStartLoading, uiStopLoading } from './index'
 import {SET_AUTH_TOKEN} from './actionTypes'
 import startMainTabs from '../../screens/MainTabs/startMainTabs'
-import { Promise } from 'winjs';
 
 export const tryAuth = (authData, isInLoginMode) => {
   return dispatch => {
@@ -62,5 +61,6 @@ export const getToken = () => {
         resolve(token)
       }
    })
+   return promise
  }
 }
