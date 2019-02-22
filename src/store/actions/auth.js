@@ -53,14 +53,14 @@ export const setAuthToken = token => {
 
 export const getToken = () => {
   return (dispatch, getState) => {
-    const promise = new Promise((resolve,reject) => {
+    const promise = new Promise((resolve, reject) => {
       const token = getState().auth.token
-      if(!token){
-      reject()
+      if (!token) {
+        reject()
       } else {
         resolve(token)
       }
-   })
-   return promise
- }
+    })
+    return promise
+  }
 }

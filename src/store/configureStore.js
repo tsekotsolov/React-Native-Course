@@ -9,7 +9,7 @@ import thunk from 'redux-thunk'
 const rootReducer = combineReducers({
   places: placesReducer,
   ui: uiReducer,
-  auth:authReducer
+  auth: authReducer
 })
 
 let composeEnchancers = compose
